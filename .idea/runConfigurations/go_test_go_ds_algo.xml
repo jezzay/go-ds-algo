@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="go test go-ds-algo" type="GoTestRunConfiguration" factoryName="Go Test">
+    <module name="go-ds-algo" />
+    <working_directory value="$PROJECT_DIR$" />
+    <framework value="gotest" />
+    <kind value="DIRECTORY" />
+    <package value="github.com/jezzay/go-ds-algo" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$" />
+    <method />
+  </configuration>
+</component>
