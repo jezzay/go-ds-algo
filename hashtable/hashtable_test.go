@@ -10,7 +10,7 @@ func TestNew(t *testing.T) {
 }
 
 func TestMap_Put(t *testing.T) {
-	m := &Map{table: make([]*ListNode, 5)}
+	m := &HashMap{table: make([]*ListNode, 5)}
 	m.Put("key", "value")
 	node := m.table[4]
 	if node == nil {
@@ -25,7 +25,7 @@ func TestMap_Put(t *testing.T) {
 }
 
 func TestMap_Get(t *testing.T) {
-	m := &Map{table: make([]*ListNode, 5)}
+	m := &HashMap{table: make([]*ListNode, 5)}
 	m.Put("key", "value")
 	node := m.table[4]
 	v, ok := m.Get("key")
@@ -41,7 +41,7 @@ func TestMap_Get(t *testing.T) {
 }
 
 func TestMap_Contains(t *testing.T)  {
-	m := &Map{table: make([]*ListNode, 5)}
+	m := &HashMap{table: make([]*ListNode, 5)}
 	m.Put("key", "value")
 	ok := m.Contains("key")
 	if !ok {
@@ -50,7 +50,7 @@ func TestMap_Contains(t *testing.T)  {
 }
 
 func TestHashKey(t *testing.T) {
-	m := &Map{table: make([]*ListNode, 5)}
+	m := &HashMap{table: make([]*ListNode, 5)}
 	hashKey := m.hashKey("key")
 	if hashKey != 4 {
 		t.Errorf("Exepected hashKey() to equal %v, recieved %v", 4, hashKey)

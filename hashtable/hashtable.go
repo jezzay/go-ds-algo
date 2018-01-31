@@ -4,25 +4,27 @@ import (
 	"math"
 )
 
+type HashTable interface {
+	Put(k string, v string)
+	Get(k string) (v string, ok bool)
+	Contains(k string) (bool)
+}
+
 type ListNode struct {
 	key   string
 	value string
 	next  *ListNode
 }
 
-type HashTable interface {
-	Put(k string, v string)
-}
-
-type Map struct {
+type HashMap struct {
 	table []*ListNode
 }
 
-func New() *Map {
-	return &Map{table: make([]*ListNode, 64)}
+func New() *HashMap {
+	return &HashMap{table: make([]*ListNode, 64)}
 }
 
-func (m *Map) Put(k string, v string) {
+func (m *HashMap) Put(k string, v string) {
 	hash := m.hashKey(k)
 	n := m.table[hash]
 	for n != nil {
@@ -40,7 +42,7 @@ func (m *Map) Put(k string, v string) {
 	}
 }
 
-func (m *Map) Get(k string) (string, bool) {
+func (m *HashMap) Get(k string) (string, bool) {
 	hash := m.hashKey(k)
 	n := m.table[hash]
 	for n != nil {
@@ -52,12 +54,12 @@ func (m *Map) Get(k string) (string, bool) {
 	return "", false
 }
 
-func (m *Map) Contains(k string) (bool) {
+func (m *HashMap) Contains(k string) (bool) {
 	_, ok := m.Get(k)
 	return ok
 }
 
-func (m *Map) hashKey(k string) int {
+func (m *HashMap) hashKey(k string) int {
 	hash := hashCode(k) % len(m.table)
 	abs := math.Abs(float64(hash))
 	return int(abs)
