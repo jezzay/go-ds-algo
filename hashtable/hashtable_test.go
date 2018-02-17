@@ -40,7 +40,7 @@ func TestMap_Get(t *testing.T) {
 	}
 }
 
-func TestMap_Contains(t *testing.T)  {
+func TestMap_Contains(t *testing.T) {
 	m := &HashTable{table: make([]*ListNode, 5)}
 	m.Put("key", "value")
 	ok := m.Contains("key")

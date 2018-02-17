@@ -21,7 +21,7 @@ func Test_inOrderTraversal(t *testing.T) {
 	inOrderTraversal(tree, visit)
 }
 
-func Test_perOrderTraversal(t *testing.T)  {
+func Test_perOrderTraversal(t *testing.T) {
 	visit := func(tree *BinaryTreeNode) {
 		fmt.Printf("Tree = %v \n", tree)
 	}
@@ -29,7 +29,7 @@ func Test_perOrderTraversal(t *testing.T)  {
 	perOrderTraversal(tree, visit)
 }
 
-func Test_postOrderTraversal(t *testing.T)  {
+func Test_postOrderTraversal(t *testing.T) {
 	visit := func(tree *BinaryTreeNode) {
 		fmt.Printf("Tree = %v \n", tree)
 	}

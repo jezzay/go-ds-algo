@@ -52,9 +52,9 @@ func TestMax(t *testing.T) {
 
 }
 
-func BenchmarkMax1(b *testing.B) { benchmarkMax(makeList(5), b) }
-func BenchmarkMax2(b *testing.B) { benchmarkMax(makeList(5, 2), b) }
-func BenchmarkMax5(b *testing.B) { benchmarkMax(makeList(5, 2, -1, 3, 0), b) }
+func BenchmarkMax1(b *testing.B)  { benchmarkMax(makeList(5), b) }
+func BenchmarkMax2(b *testing.B)  { benchmarkMax(makeList(5, 2), b) }
+func BenchmarkMax5(b *testing.B)  { benchmarkMax(makeList(5, 2, -1, 3, 0), b) }
 func BenchmarkMax10(b *testing.B) { benchmarkMax(makeList(5, 2, -15, 2, 2, -3, 0, 8, 6), b) }
 
 func BenchmarkMax27(b *testing.B) {
