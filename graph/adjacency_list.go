@@ -10,7 +10,11 @@ type Node struct {
 	children []Node
 }
 
-func depthFirstSearch(root *Node, visit func(node *Node)) {
+func NewAdjacencyListNode(name string, children []Node) Node {
+	return Node{name, false, children}
+}
+
+func DepthFirstSearch(root *Node, visit func(node *Node)) {
 	if root == nil {
 		return
 	}
@@ -18,7 +22,7 @@ func depthFirstSearch(root *Node, visit func(node *Node)) {
 	root.visited = true
 	for _, n := range root.children {
 		if !n.visited {
-			depthFirstSearch(&n, visit)
+			DepthFirstSearch(&n, visit)
 		}
 	}
 }
