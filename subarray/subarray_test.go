@@ -12,7 +12,71 @@ type MaxTest struct {
 	expectedList []int
 }
 
-func TestMax(t *testing.T) {
+type MaxBenchmark struct {
+	name string
+	list []int
+}
+
+func TestMaxKadane(t *testing.T) {
+	tests := createMaxTests()
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			result := MaxKadane(test.list)
+			if len(result) != test.expectedLen {
+				t.Errorf("%v: Expected size of maximum sub array to be %v, received %v",
+					test.name, test.expectedLen, len(result))
+			}
+			if !reflect.DeepEqual(result, test.expectedList) {
+				t.Errorf("%v: Expected contiguous array to contain %v , received %v", test.name, test.expectedList, result)
+			}
+
+		})
+	}
+}
+
+func TestMaxBruteForce(t *testing.T) {
+	tests := createMaxTests()
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			result := MaxBruteForce(test.list)
+			if len(result) != test.expectedLen {
+				t.Errorf("%v: Expected size of maximum sub array to be %v, received %v",
+					test.name, test.expectedLen, len(result))
+			}
+			if !reflect.DeepEqual(result, test.expectedList) {
+				t.Errorf("%v: Expected contiguous array to contain %v , received %v", test.name, test.expectedList, result)
+			}
+
+		})
+	}
+
+}
+
+func BenchmarkMaxBruteForce(b *testing.B) {
+	benchmarks := createMaxBenchmarks()
+	for _, bm := range benchmarks {
+		b.Run(bm.name, func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				MaxBruteForce(bm.list)
+			}
+		})
+	}
+}
+
+func BenchmarkMaxKadane(b *testing.B) {
+	benchmarks := createMaxBenchmarks()
+	for _, bm := range benchmarks {
+		b.Run(bm.name, func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				MaxKadane(bm.list)
+			}
+		})
+	}
+}
+
+func createMaxTests() []*MaxTest {
 	tests := make([]*MaxTest, 0)
 
 	tests = append(tests, &MaxTest{
@@ -35,42 +99,27 @@ func TestMax(t *testing.T) {
 	//	expectedLen:  1,
 	//	expectedList: makeList(-42),
 	//})
-
-	for _, test := range tests {
-		t.Run(test.name, func(t *testing.T) {
-			result := Max(test.list)
-			if len(result) != test.expectedLen {
-				t.Errorf("%v: Expected size of maximum sub array to be %v, received %v",
-					test.name, test.expectedLen, len(result))
-			}
-			if !reflect.DeepEqual(result, test.expectedList) {
-				t.Errorf("%v: Expected contiguous array to contain %v , received %v", test.name, test.expectedList, result)
-			}
-
-		})
-	}
-
+	return tests
 }
 
-func BenchmarkMax1(b *testing.B)  { benchmarkMax(makeList(5), b) }
-func BenchmarkMax2(b *testing.B)  { benchmarkMax(makeList(5, 2), b) }
-func BenchmarkMax5(b *testing.B)  { benchmarkMax(makeList(5, 2, -1, 3, 0), b) }
-func BenchmarkMax10(b *testing.B) { benchmarkMax(makeList(5, 2, -15, 2, 2, -3, 0, 8, 6), b) }
+func createMaxBenchmarks() []MaxBenchmark {
+	benchmarks := make([]MaxBenchmark, 0)
 
-func BenchmarkMax27(b *testing.B) {
+	benchmarks = append(benchmarks, MaxBenchmark{name: "single", list: makeList(5)})
+	benchmarks = append(benchmarks, MaxBenchmark{name: "double", list: makeList(5, 2)})
+	benchmarks = append(benchmarks, MaxBenchmark{name: "five", list: makeList(5, 2, -1, 3, 0)})
+	benchmarks = append(benchmarks, MaxBenchmark{name: "eight", list: makeList(5, 2, -1, 3, 0, -1, 3, 0)})
+	benchmarks = append(benchmarks, MaxBenchmark{name: "ten", list: makeList(5, 2, -15, 2, 2, -3, 0, 8, 6)})
+	benchmarks = append(benchmarks, MaxBenchmark{name: "13", list: makeList(-3, 5, 2, -15, 65, 2, 2, -3, 0, 8, 0, 8, 6)})
+	benchmarks = append(benchmarks, MaxBenchmark{name: "15", list: makeList(-3, 5, 2, -15, 65, 2, 2, -3, 0, 8, 0, 8, 6, 7, 5)})
+	benchmarks = append(benchmarks, MaxBenchmark{name: "17", list: makeList(65, 2, -15, 2, 2, -3, 5, 2, -15, 2, 2, -3, 0, 8, 0, 8, 6)})
+	benchmarks = append(benchmarks, MaxBenchmark{name: "20", list: makeList(65, 2, -15, 2, 2, -3, 5, 2, -15, 2, 2, -3, 0, 8, 0, 8, 6, 16, 73, 34)})
+	benchmarks = append(benchmarks, MaxBenchmark{name: "25", list: makeList(65, 2, -15, 2, 2, -3, 5, 8, 6, 16, -31, 4, 2, -15, 2, 2, -3, 0, 8, 0, 8, 6, 16, -31, 4)})
+
 	list := makeList(-2, 1, -3, 4, -1, 10, 1, 5, 34, 0, 2, 4, 9, 2, 1, 4, 15, 1, 7, 4, 8, 2, 13, -15, 6, 24, -6)
-	benchmarkMax(list, b)
-}
+	benchmarks = append(benchmarks, MaxBenchmark{name: "27", list: list})
 
-var result []int
-
-func benchmarkMax(list []int, b *testing.B) {
-
-	var r []int
-	for i := 0; i < b.N; i++ {
-		r = Max(list)
-	}
-	result = r
+	return benchmarks
 }
 
 func makeList(numbers ...int) []int {
