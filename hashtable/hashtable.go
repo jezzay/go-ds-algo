@@ -19,6 +19,7 @@ func New() *HashTable {
 }
 
 func (m *HashTable) Put(k string, v string) {
+	// note: this HashTable impl does not resize and rehash once a load factor is reached.
 	hash := m.hashKey(k)
 	n := m.table[hash]
 	for n != nil {

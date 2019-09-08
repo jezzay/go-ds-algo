@@ -1,6 +1,8 @@
 package hashtable
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestNew(t *testing.T) {
 	m := New()
